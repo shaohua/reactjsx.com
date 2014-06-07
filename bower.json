@@ -1,0 +1,31 @@
+{
+  "name": "reactjsx",
+  "version": "0.0.1",
+  "homepage": "https://github.com/shaohua/reactjsx.com",
+  "authors": [
+    "shaohua@howtox.com"
+  ],
+  "description": "web components, react, react jsx",
+  "main": "index.html",
+  "keywords": [
+    "web",
+    "components",
+    "polymer",
+    "react",
+    "react",
+    "jsx"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-elements": "Polymer/core-elements#~0.3.1",
+    "polymer-elements": "Polymer/polymer-elements#~0.3.0",
+    "polymer-ui-elements": "Polymer/polymer-ui-elements#~0.3.0"
+  }
+}
