@@ -1,32 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- normalize css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/normalize.css/normalize.css">
+    <!-- our css -->
     <link rel="stylesheet" type="text/css" href="dist/reactjsx.css">
     <!-- 1. Load platform.js for polyfill support. -->
     <script src="bower_components/platform/platform.js"></script>
 
     <!-- 2. Use an HTML Import to bring in the element. -->
-    <link rel="import"
-          href="bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="components/rx-index/rx-index.html">
   </head>
   <body>
-    <!-- 3. Declare the element. Configure using its attributes. -->
-    <core-ajax url="dist/test.json"
-               handleAs="json"></core-ajax>
-
-    <script>
-      // Wait for 'polymer-ready'. Ensures the element is upgraded.
-      window.addEventListener('polymer-ready', function(e) {
-        var ajax = document.querySelector('core-ajax');
-
-        // Respond to events it fires.
-        ajax.addEventListener('core-response', function(e) {
-          console.log(this.response);
-        });
-
-        ajax.go(); // Call its API methods.
-      });
-    </script>
-    <script type="text/javascript" src="dist/reactjsx.min.js"></script>
+    <rx-index></rx-index>
   </body>
 </html>
