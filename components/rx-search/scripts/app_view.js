@@ -72,6 +72,19 @@ var AppView = React.createClass({
     }.bind(this));
   },
 
+  onRemove: function(){
+    //remove all data
+    var localRef = this.firebaseRef.transaction(function(data){
+      _.chain(data)
+        .keys()
+        .each(function(key){
+          delete data[key];
+        });
+      return data;
+    });
+    console.log('remove');
+  },
+
   onChange: function(event){
     this.setState({
       currentInput: event.target.value
@@ -142,6 +155,9 @@ var AppView = React.createClass({
                   <input type='button'
                     onClick={this.onClick}
                     value='Submit'/>
+                  <input type='button'
+                    onClick={this.onRemove}
+                    value='Remove'/>
                 </div>
               </Panel>
             </Col>
