@@ -33,6 +33,9 @@
     },
     "react": {
       "exports": "global:React"
+    },
+    "react-bootstrap": {
+      "exports": "global:ReactBootstrap"
     }
   }
 }

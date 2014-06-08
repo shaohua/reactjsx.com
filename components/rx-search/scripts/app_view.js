@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
 var _ = require('underscore'),
-  React = require('react');
+  React = require('react'),
+  RB = require('react-bootstrap'),
+  Jumbotron = RB.Jumbotron,
+  Button = RB.Button,
+  Panel = RB.Panel;
 
 function getStoreState() {
   return {
@@ -62,14 +66,23 @@ var AppView = React.createClass({
 
   render: function() {
     return (
-      <div className="commentBox">
-        Hello, world! I am a CommentBox.
-        <input type='text'
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress} />
-        <input type='button'
-          onClick={this.onClick}
-          value='Submit'/>
+      <div>
+        <Jumbotron>
+          <h1>Hello, world!</h1>
+          <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+          <p><Button bsStyle="primary">Learn more</Button></p>
+        </Jumbotron>
+        <Panel>
+          <div className="commentBox">
+            Hello, world! I am a CommentBox.
+            <input type='text'
+              onChange={this.onChange}
+              onKeyPress={this.onKeyPress} />
+            <input type='button'
+              onClick={this.onClick}
+              value='Submit'/>
+          </div>
+        </Panel>
       </div>
     );
   }
