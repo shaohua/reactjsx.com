@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var _ = require('underscore'),
+  $ = require('jquery'),
   React = require('react'),
   RB = require('react-bootstrap'),
   Jumbotron = RB.Jumbotron,
@@ -55,8 +56,20 @@ var AppView = React.createClass({
 
 
   onClick: function(){
-    // console.log('onClick');
-    this.save();
+    console.log('onClick');
+    // this.save();
+    $.ajax({
+      url: 'https://api.github.com/repos/facebook/react',
+      type: 'GET'
+    }).then(function(data){
+      var repoInfo = {
+        description: data.description,
+        watchers_count: data.watchers_count,
+        forks_count: data.forks_count
+      };
+
+      this.firebaseRef.push(repoInfo);
+    }.bind(this));
   },
 
   onChange: function(event){
