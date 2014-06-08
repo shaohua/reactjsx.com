@@ -39,7 +39,7 @@ var AppView = React.createClass({
 
   componentWillMount: function() {
     this.firebaseRef.on("child_added", function(dataSnapshot) {
-      // console.log('child_added', arguments);
+      console.log('child_added', arguments);
       this.items.push(dataSnapshot.val());
       this.setState({
         items: this.items
@@ -99,6 +99,14 @@ var AppView = React.createClass({
     }
   },
 
+  onSearchChange: function(event){
+    this.setState({
+      query: event.target.value
+    }, function(){
+      // console.log('query', this.state.query);
+    }.bind(this));
+  },
+
   save: function(){
     this.firebaseRef.push({
       text: this.state.currentInput
@@ -115,8 +123,31 @@ var AppView = React.createClass({
       );
   },
 
+  containsQuery: function (item, query){
+    query = query || '';  //guard gainst undefined
+    var descLower = item.description.toLowerCase();
+    var queryLower = query.toLowerCase();
+    return (descLower.indexOf(queryLower) > -1);
+  },
+
   render: function() {
     var brand = <a href="/" className="navbar-brand">Reactjsx.com</a>;
+
+    var filteredItems = _.filter(this.state.items, function(item){
+      return this.containsQuery(item, this.state.query);
+    }, this);
+
+    var results = _.map(filteredItems, function(item){
+      return (
+        <li>
+          <ul>
+            <li>{item.description}</li>
+            <li>{item.forks_count}</li>
+            <li>{item.watchers_count}</li>
+          </ul>
+        </li>
+      );
+    });
 
     return (
       <div>
@@ -142,8 +173,22 @@ var AppView = React.createClass({
             <Col xs={6} md={4}><Panel>test 3</Panel></Col>
           </Row>
           <Row className="show-grid">
-            <Col xs={18} md={12}><Panel>test 4</Panel></Col>
+            <Col xs={18} md={12}><Panel>
+              <input type='text'
+                class='search'
+                onChange={this.onSearchChange}
+                />
+            </Panel></Col>
           </Row>
+
+          <Row className="show-grid">
+            <Col xs={18} md={12}><Panel>
+              <ul>
+                {results}
+              </ul>
+            </Panel></Col>
+          </Row>
+
           <Row className="show-grid">
             <Col xs={18} md={12}>
               <Panel>
