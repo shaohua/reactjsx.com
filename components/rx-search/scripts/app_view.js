@@ -4,13 +4,26 @@ var _ = require('underscore'),
   RB = require('react-bootstrap'),
   Jumbotron = RB.Jumbotron,
   Button = RB.Button,
-  Panel = RB.Panel;
+  Panel = RB.Panel,
+  Navbar = RB.Navbar,
+  Nav = RB.Nav;
 
 function getStoreState() {
   return {
     items: []
   };
 }
+
+var NAV_LINKS = {
+  'getting-started': {
+    link: '/getting-started.html',
+    title: 'Getting started'
+  },
+  'components': {
+    link: '/components.html',
+    title: 'Components'
+  }
+};
 
 var AppView = React.createClass({
   getInitialState: function() {
@@ -63,10 +76,26 @@ var AppView = React.createClass({
     });
   },
 
+  renderNavItem: function (linkName) {
+    var link = NAV_LINKS[linkName];
+
+    return (
+        <li className={this.props.activePage === linkName ? 'active' : null} key={linkName}>
+          <a href={link.link}>{link.title}</a>
+        </li>
+      );
+  },
 
   render: function() {
+    var brand = <a href="/" className="navbar-brand">Reactjsx.com</a>;
+
     return (
       <div>
+        <Navbar componentClass={React.DOM.header} brand={brand} staticTop className="bs-docs-nav" role="banner" toggleNavKey={0}>
+          <Nav className="bs-navbar-collapse" role="navigation" key={0} id="top">
+            {Object.keys(NAV_LINKS).map(this.renderNavItem)}
+          </Nav>
+        </Navbar>
         <Jumbotron>
           <h1>Hello, world!</h1>
           <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
