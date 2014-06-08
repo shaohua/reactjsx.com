@@ -6,7 +6,10 @@ var _ = require('underscore'),
   Button = RB.Button,
   Panel = RB.Panel,
   Navbar = RB.Navbar,
-  Nav = RB.Nav;
+  Nav = RB.Nav,
+  Grid = RB.Grid,
+  Row = RB.Row,
+  Col = RB.Col;
 
 function getStoreState() {
   return {
@@ -96,22 +99,45 @@ var AppView = React.createClass({
             {Object.keys(NAV_LINKS).map(this.renderNavItem)}
           </Nav>
         </Navbar>
-        <Jumbotron>
-          <h1>Hello, world!</h1>
-          <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-          <p><Button bsStyle="primary">Learn more</Button></p>
-        </Jumbotron>
-        <Panel>
-          <div className="commentBox">
-            Hello, world! I am a CommentBox.
-            <input type='text'
-              onChange={this.onChange}
-              onKeyPress={this.onKeyPress} />
-            <input type='button'
-              onClick={this.onClick}
-              value='Submit'/>
-          </div>
-        </Panel>
+
+        <Grid>
+          <Row className="show-grid">
+            <Col xs={18} md={12}>
+              <Jumbotron>
+                <h1>Hello, world!</h1>
+                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <p><Button bsStyle="primary">Learn more</Button></p>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col xs={6} md={4}><Panel>test 1</Panel></Col>
+            <Col xs={6} md={4}><Panel>test 2</Panel></Col>
+            <Col xs={6} md={4}><Panel>test 3</Panel></Col>
+          </Row>
+          <Row className="show-grid">
+            <Col xs={18} md={12}><Panel>test 4</Panel></Col>
+          </Row>
+          <Row className="show-grid">
+            <Col xs={18} md={12}>
+              <Panel>
+                <div className="commentBox">
+                  Hello, world! I am a CommentBox.
+                  <input type='text'
+                    onChange={this.onChange}
+                    onKeyPress={this.onKeyPress} />
+                  <input type='button'
+                    onClick={this.onClick}
+                    value='Submit'/>
+                </div>
+              </Panel>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col xs={18} md={12}><Panel>test 4</Panel></Col>
+          </Row>
+        </Grid>
+
       </div>
     );
   }
