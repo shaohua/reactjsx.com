@@ -18,7 +18,7 @@ var AppView = React.createClass({
 
   componentWillMount: function() {
     this.firebaseRef.on("child_added", function(dataSnapshot) {
-      console.log('child_added', arguments);
+      // console.log('child_added', arguments);
       this.items.push(dataSnapshot.val());
       this.setState({
         items: this.items
@@ -35,17 +35,41 @@ var AppView = React.createClass({
 
 
   onClick: function(){
-    console.log('onClick');
-    this.firebaseRef.push({
-      text: 'test'
+    // console.log('onClick');
+    this.save();
+  },
+
+  onChange: function(event){
+    this.setState({
+      currentInput: event.target.value
     });
   },
 
+  onKeyPress: function(event){
+    // console.log('onKeyPress');
+    if(event.which === 13){
+      this.save();
+      // console.log('enter', this.state.currentInput);
+    }
+  },
+
+  save: function(){
+    this.firebaseRef.push({
+      text: this.state.currentInput
+    });
+  },
+
+
   render: function() {
     return (
-      <div className="commentBox"
-        onClick={this.onClick}>
+      <div className="commentBox">
         Hello, world! I am a CommentBox.
+        <input type='text'
+          onChange={this.onChange}
+          onKeyPress={this.onKeyPress} />
+        <input type='button'
+          onClick={this.onClick}
+          value='Submit'/>
       </div>
     );
   }
