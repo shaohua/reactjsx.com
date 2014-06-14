@@ -38,6 +38,15 @@ var AppView = React.createClass({
   },
 
   componentWillMount: function() {
+    this.auth = new FirebaseSimpleLogin(this.firebaseRef, function(error, user) {
+      if (error) {
+        this.user = null;
+        return;
+      }
+
+      this.user = user;
+    });
+
     this.firebaseRef.on("child_added", function(dataSnapshot) {
       console.log('child_added', arguments);
       this.items.push(dataSnapshot.val());
@@ -54,12 +63,34 @@ var AppView = React.createClass({
     this.firebaseRef.off();
   },
 
+  onLogin: function(){
+    console.log('onLogin');
+    this.auth.login('github', {
+      rememberMe: true
+    });
+  },
+
+  parseUrl: function(githubUrl){
+    var results = githubUrl.match(/github.com\/([^\/]+)\/([^\/]+)/i);
+    //not global, needs to stop at the first match
+    //case insenstive
+
+    //have default values in case of no match
+    return {
+      userName: results[1] || 'facebook',
+      repoName: results[2] || 'react'
+    };
+  },
 
   onClick: function(){
-    console.log('onClick');
+    console.log('onClick', this.state);
+    var urlObj = this.parseUrl(this.state.currentInput);
+    var githubUrl = 'https://api.github.com/repos/' +
+                    urlObj.userName + '/' +
+                    urlObj.repoName;
     // this.save();
     $.ajax({
-      url: 'https://api.github.com/repos/facebook/react',
+      url: githubUrl,
       type: 'GET'
     }).then(function(data){
       var repoInfo = {
@@ -168,7 +199,9 @@ var AppView = React.createClass({
             </Col>
           </Row>
           <Row className="show-grid">
-            <Col xs={6} md={4}><Panel>test 1</Panel></Col>
+            <Col xs={6} md={4}><Panel>
+              <Button onClick={this.onLogin}>Login with Github</Button>
+            </Panel></Col>
             <Col xs={6} md={4}><Panel>test 2</Panel></Col>
             <Col xs={6} md={4}><Panel>test 3</Panel></Col>
           </Row>
