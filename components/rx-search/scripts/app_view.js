@@ -32,6 +32,8 @@ var NAV_LINKS = {
 var AppView = React.createClass({
   getInitialState: function() {
     this.items = [];
+
+    this.peopleRef = new Firebase("//reactjsx.firebaseio.com/people");
     this.firebaseRef = new Firebase("//reactjsx.firebaseio.com/components");
 
     return getStoreState();
@@ -44,8 +46,26 @@ var AppView = React.createClass({
         return;
       }
 
-      this.user = user;
-    });
+      this.user = user; //expose for other functions
+
+      var currentPeopleRef = this.peopleRef.child( user.id );
+      currentPeopleRef.once("value", function(peopleSnap) {
+        var info = {};
+        var val = peopleSnap.val();
+        if (!val) {
+          // If this is a first time login, upload user details.
+          info = {
+            id: user.id,
+            uid: user.uid,
+            provider: user.provider,
+            username: user.username
+          };
+          currentPeopleRef.set(info);
+        }
+        currentPeopleRef.child("presence").set("online");
+      });
+
+    }.bind(this));
 
     this.firebaseRef.on("child_added", function(dataSnapshot) {
       console.log('child_added', arguments);
@@ -96,7 +116,8 @@ var AppView = React.createClass({
       var repoInfo = {
         description: data.description,
         watchers_count: data.watchers_count,
-        forks_count: data.forks_count
+        forks_count: data.forks_count,
+        userid: this.user.id
       };
 
       this.firebaseRef.push(repoInfo);
