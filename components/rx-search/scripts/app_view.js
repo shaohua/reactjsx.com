@@ -196,19 +196,12 @@ var AppView = React.createClass({
           <Row className="show-grid">
             <Col xs={18} md={12}>
               <Jumbotron>
-                <h2>A collection of reusable React components</h2>
-
-                <Button className='oneline-button'
-                  bsStyle="primary">Search
-                </Button>
-                <div className='oneline-input-container'>
-                  <input type='text'
-                    placeholder='react component'
-                    className='oneline-input'
-                    onChange={this.onSearchChange}
-                  />
-                </div>
-
+                <h2 className="center">Search reusable React components</h2>
+                <input type='text'
+                  placeholder='react component'
+                  className='search-input'
+                  onChange={this.onSearchChange}
+                />
               </Jumbotron>
             </Col>
           </Row>
