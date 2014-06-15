@@ -11,7 +11,8 @@ var _ = require('underscore'),
   Nav = RB.Nav,
   Grid = RB.Grid,
   Row = RB.Row,
-  Col = RB.Col;
+  Col = RB.Col,
+  Table = RB.Table;
 
 function getStoreState() {
   return {
@@ -99,17 +100,22 @@ var AppView = React.createClass({
     var githubUrl = 'https://api.github.com/repos/' +
                     urlObj.userName + '/' +
                     urlObj.repoName;
+    var repoUrl = '//github.com/' +
+                    urlObj.userName + '/' +
+                    urlObj.repoName;
     // this.save();
     $.ajax({
       url: githubUrl,
       type: 'GET'
     }).then(function(data){
-      var repoInfo = {
-        description: data.description,
-        watchers_count: data.watchers_count,
-        forks_count: data.forks_count,
-        userid: this.user.id
-      };
+      var repoInfo = _.extend({
+        userid: this.user.id,
+        reactjsx: {
+          userName: urlObj.userName,
+          repoName: urlObj.repoName,
+          repoUrl: repoUrl
+        }
+      }, data);
 
       this.firebaseRef.push(repoInfo);
     }.bind(this));
@@ -170,15 +176,19 @@ var AppView = React.createClass({
       return this.containsQuery(item, this.state.query);
     }, this);
 
-    var results = _.map(filteredItems, function(item){
+    var tableResults = _.map(filteredItems, function(item){
       return (
-        <li>
-          <ul>
-            <li>{item.description}</li>
-            <li>{item.forks_count}</li>
-            <li>{item.watchers_count}</li>
-          </ul>
-        </li>
+        <tr>
+          <td>
+            <a target='_blank' href={item.reactjsx && item.reactjsx.repoUrl}>
+              {item.reactjsx && item.reactjsx.repoName}
+            </a>
+          </td>
+          <td>{item.description}</td>
+          <td>{item.watchers_count}</td>
+          <td>{item.reactjsx && item.reactjsx.userName}</td>
+          <td>{item.updated_at}</td>
+        </tr>
       );
     });
 
@@ -214,9 +224,20 @@ var AppView = React.createClass({
           <Row className="show-grid">
             <Col xs={18} md={12}>
               <Panel header='Search results' bsStyle="primary">
-                <ul>
-                  {results}
-                </ul>
+                <Table striped condensed hover>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Stars</th>
+                      <th>Author</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableResults}
+                  </tbody>
+                </Table>
               </Panel>
             </Col>
           </Row>
