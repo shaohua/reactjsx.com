@@ -59,12 +59,17 @@ var AppView = React.createClass({
 
     }.bind(this));
 
+    var usernameLocation;
     this.firebaseRef.on("child_added", function(dataSnapshot) {
-      console.log('child_added', arguments);
-      this.items.push(dataSnapshot.val());
+      usernameLocation = dataSnapshot.val();
+      this.items = this.items.concat( _.values(usernameLocation) );
       this.setState({
         items: this.items
       });
+    }.bind(this));
+
+    this.firebaseRef.on("value", function(dataSnapshot) {
+      console.log('value', dataSnapshot.val());
     }.bind(this));
   },
 
@@ -94,6 +99,14 @@ var AppView = React.createClass({
     };
   },
 
+  /**
+   * replace . in url with _
+   * coz firebase doesn't allow . in path
+   */
+  _normalize: function(input){
+    return input.replace(/\./ig,'_');
+  },
+
   onClick: function(){
     console.log('onClick', this.state);
     var urlObj = this.parseUrl(this.state.currentInput);
@@ -117,7 +130,10 @@ var AppView = React.createClass({
         }
       }, data);
 
-      this.firebaseRef.push(repoInfo);
+      this.firebaseRef
+        .child(urlObj.userName)
+        .child( this._normalize(urlObj.repoName) )
+        .set(repoInfo);
     }.bind(this));
   },
 
