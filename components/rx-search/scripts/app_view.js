@@ -34,29 +34,34 @@ var AppView = React.createClass({
   componentWillMount: function() {
     this.auth = new FirebaseSimpleLogin(this.firebaseRef, function(error, user) {
       if (error) {
-        this.user = null;
+        this.setState({
+          user: null
+        });
         return;
       }
 
-      this.user = user; //expose for other functions
-
-      var currentPeopleRef = this.peopleRef.child( user.id );
-      currentPeopleRef.once("value", function(peopleSnap) {
-        var info = {};
-        var val = peopleSnap.val();
-        if (!val) {
-          // If this is a first time login, upload user details.
-          info = {
-            id: user.id,
-            uid: user.uid,
-            provider: user.provider,
-            username: user.username
-          };
-          currentPeopleRef.set(info);
-        }
-        currentPeopleRef.child("presence").set("online");
+      this.setState({
+        user: user
       });
 
+      if(user && user.id) {
+        var currentPeopleRef = this.peopleRef.child( user.id );
+        currentPeopleRef.once("value", function(peopleSnap) {
+          var info = {};
+          var val = peopleSnap.val();
+          if (!val) {
+            // If this is a first time login, upload user details.
+            info = {
+              id: user.id,
+              uid: user.uid,
+              provider: user.provider,
+              username: user.username
+            };
+            currentPeopleRef.set(info);
+          }
+          currentPeopleRef.child("presence").set("online");
+        });
+      }
     }.bind(this));
 
     var usernameLocation;
@@ -69,7 +74,7 @@ var AppView = React.createClass({
     }.bind(this));
 
     this.firebaseRef.on("value", function(dataSnapshot) {
-      console.log('value', dataSnapshot.val());
+      // console.log('value', dataSnapshot.val());
     }.bind(this));
   },
 
@@ -84,6 +89,14 @@ var AppView = React.createClass({
     console.log('onLogin');
     this.auth.login('github', {
       rememberMe: true
+    });
+  },
+
+  onLogout: function(){
+    console.log('onLogout');
+    this.auth.logout();
+    this.setState({
+      user: null
     });
   },
 
@@ -109,6 +122,11 @@ var AppView = React.createClass({
 
   onClick: function(){
     console.log('onClick', this.state);
+    if(!this.state.user) {
+      alert('Could you please login with Github? Thanks.');
+      return;
+    }
+
     var urlObj = this.parseUrl(this.state.currentInput);
     var githubUrl = 'https://api.github.com/repos/' +
                     urlObj.userName + '/' +
@@ -122,7 +140,7 @@ var AppView = React.createClass({
       type: 'GET'
     }).then(function(data){
       var repoInfo = _.extend({
-        userid: this.user.id,
+        userid: this.state.user.id,
         reactjsx: {
           userName: urlObj.userName,
           repoName: urlObj.repoName,
@@ -208,12 +226,20 @@ var AppView = React.createClass({
       );
     });
 
+    var loginClassName = this.state.user ? 'hide' : 'show',
+      logoutClassName = this.state.user ? 'show' : 'hide';
+
     return (
       <div>
         <Navbar componentClass={React.DOM.header} brand={brand} staticTop className="bs-docs-nav" role="banner" toggleNavKey={0}>
           <Nav className="bs-navbar-collapse" role="navigation" key={0} id="top">
             <li>
-              <a href="#" onClick={this.onLogin}>Login with Github</a>
+              <a href="#" className={loginClassName}
+                onClick={this.onLogin}>Login with Github</a>
+            </li>
+            <li>
+              <a href="#" className={logoutClassName}
+                onClick={this.onLogout}>Logout</a>
             </li>
           </Nav>
         </Navbar>
