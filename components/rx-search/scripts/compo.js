@@ -21,10 +21,7 @@ _.extend(Proto, {
   },
 
   initialize: function(){
-    React.renderComponent(
-      <AppView />,
-      this
-    );
+    React.renderComponent(<AppView />, this);
   }
 });
 
