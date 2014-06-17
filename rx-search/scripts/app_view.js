@@ -152,6 +152,11 @@ var AppView = React.createClass({
         .child( this._normalize(urlObj.repoName) )
         .set(repoInfo);
     }.bind(this));
+
+    //clear input
+    this.setState({
+      currentInput: ''
+    });
   },
 
   onChange: function(event){
@@ -276,6 +281,7 @@ var AppView = React.createClass({
                 <input type='text'
                   className='oneline-input'
                   placeholder='github.com/facebook/react/'
+                  value={this.state.currentInput}
                   onChange={this.onChange}
                   onKeyPress={this.onKeyPress} />
               </div>
