@@ -14,90 +14,88 @@ var _ = require('underscore'),
   Col = RB.Col,
   Table = RB.Table;
 
-function getStoreState() {
-  return {
-    items: []
-  };
-}
-
-
 var AppView = React.createClass({
   getInitialState: function() {
-    this.items = [];
-
-    this.peopleRef = new Firebase("//reactjsx.firebaseio.com/people");
-    this.firebaseRef = new Firebase("//reactjsx.firebaseio.com/components");
-
-    return getStoreState();
+    this.firebaseRef = new Firebase("//reactjsx.firebaseio.com");
+    this.peopleRef = this.firebaseRef.child("people");
+    this.compRef = this.firebaseRef.child("components");
+    return {
+      items: [],
+      user: null
+    };
   },
 
   componentWillMount: function() {
+    //auth callback will be invoked any time that
+    //the user's authentication state changed
     this.auth = new FirebaseSimpleLogin(this.firebaseRef, function(error, user) {
-      if (error) {
-        this.setState({
-          user: null
-        });
-        return;
-      }
+      if (error) return;
 
       this.setState({
         user: user
       });
 
       if(user && user.id) {
-        var currentPeopleRef = this.peopleRef.child( user.id );
-        currentPeopleRef.once("value", function(peopleSnap) {
-          var info = {};
-          var val = peopleSnap.val();
-          if (!val) {
-            // If this is a first time login, upload user details.
-            info = {
-              id: user.id,
-              uid: user.uid,
-              provider: user.provider,
-              username: user.username
-            };
-            currentPeopleRef.set(info);
-          }
-          currentPeopleRef.child("presence").set("online");
-        });
+        this.saveUser(user);
       }
     }.bind(this));
 
-    var usernameLocation;
-    this.firebaseRef.on("child_added", function(dataSnapshot) {
-      usernameLocation = dataSnapshot.val();
-      this.items = this.items.concat( _.values(usernameLocation) );
-      this.setState({
-        items: this.items
-      });
-    }.bind(this));
+    //get all the data initially and after every change
+    //from /facebook/react/obj1 and /react-bootstrap/react-bootstrap/obj2
+    //to [obj1, obj2]
+    var data, allItems;
+    this.compRef.on("value", function(dataSnapshot) {
+      data = dataSnapshot.val();
+      allItems = _.chain(data)
+        .values()
+        .map(function(item){ return _.values(item); })
+        .flatten()
+        .value();
 
-    this.firebaseRef.on("value", function(dataSnapshot) {
-      // console.log('value', dataSnapshot.val());
+      this.setState({
+        items: allItems
+      });
     }.bind(this));
   },
 
   componentDidMount: function() {
+    //empty for now
   },
 
+  //unbind events
   componentWillUnmount: function() {
+    this.peopleRef.off();
+    this.compRef.off();
     this.firebaseRef.off();
   },
 
+  saveUser: function(user){
+    var currentPeopleRef = this.peopleRef.child( user.id );
+    currentPeopleRef.once("value", function(peopleSnap) {
+      var val = peopleSnap.val();
+      if (!val) {
+        // If this is a first time login, upload user details.
+        currentPeopleRef.set({
+          id: user.id,
+          uid: user.uid,
+          provider: user.provider,
+          username: user.username
+        });
+      }
+      currentPeopleRef.child("presence").set("online");
+    });
+  },
+
   onLogin: function(){
-    console.log('onLogin');
+    // console.log('onLogin');
     this.auth.login('github', {
       rememberMe: true
     });
   },
 
   onLogout: function(){
-    console.log('onLogout');
+    // console.log('onLogout');
     this.auth.logout();
-    this.setState({
-      user: null
-    });
   },
 
   parseUrl: function(githubUrl){
@@ -120,8 +118,8 @@ var AppView = React.createClass({
     return input.replace(/\./ig,'_');
   },
 
-  onClick: function(){
-    console.log('onClick', this.state);
+  onSubmit: function(){
+    // console.log('onSubmit', this.state);
     if(!this.state.user) {
       alert('Could you please login with Github? Thanks.');
       return;
@@ -134,7 +132,6 @@ var AppView = React.createClass({
     var repoUrl = '//github.com/' +
                     urlObj.userName + '/' +
                     urlObj.repoName;
-    // this.save();
     $.ajax({
       url: githubUrl,
       type: 'GET'
@@ -148,24 +145,12 @@ var AppView = React.createClass({
         }
       }, data);
 
-      this.firebaseRef
+      //repoName can contain '.' but firebase can NOT
+      this.compRef
         .child(urlObj.userName)
         .child( this._normalize(urlObj.repoName) )
         .set(repoInfo);
     }.bind(this));
-  },
-
-  onRemove: function(){
-    //remove all data
-    var localRef = this.firebaseRef.transaction(function(data){
-      _.chain(data)
-        .keys()
-        .each(function(key){
-          delete data[key];
-        });
-      return data;
-    });
-    console.log('remove');
   },
 
   onChange: function(event){
@@ -174,29 +159,21 @@ var AppView = React.createClass({
     });
   },
 
+  //submit on enter
   onKeyPress: function(event){
     // console.log('onKeyPress');
     if(event.which === 13){
-      this.save();
-      // console.log('enter', this.state.currentInput);
+      this.onSubmit();
     }
   },
 
   onSearchChange: function(event){
     this.setState({
       query: event.target.value
-    }, function(){
-      // console.log('query', this.state.query);
-    }.bind(this));
-  },
-
-  save: function(){
-    this.firebaseRef.push({
-      text: this.state.currentInput
     });
   },
 
-  containsQuery: function (item, query){
+  containsQuery: function(item, query){
     query = query || '';  //guard gainst undefined
     var nameLower = item.name.toLowerCase();
     var descLower = item.description.toLowerCase();
@@ -212,7 +189,11 @@ var AppView = React.createClass({
       return this.containsQuery(item, this.state.query);
     }, this);
 
-    var tableResults = _.map(filteredItems, function(item){
+    var sortedItems = _.sortBy(filteredItems, function(item){
+      return -1 * item.watchers_count;
+    });
+
+    var tableResults = _.map(sortedItems, function(item){
       return (
         <tr>
           <td>
@@ -259,11 +240,6 @@ var AppView = React.createClass({
               </Jumbotron>
             </Col>
           </Row>
-          <Row className="show-grid">
-            <Col xs={18} md={12}>
-
-            </Col>
-          </Row>
 
           <Row className="show-grid">
             <Col xs={18} md={12}>
@@ -292,7 +268,7 @@ var AppView = React.createClass({
               <Button
                 bsStyle="success"
                 className='oneline-button'
-                onClick={this.onClick}>
+                onClick={this.onSubmit}>
                 Submit
               </Button>
               <div className='oneline-input-container'>
