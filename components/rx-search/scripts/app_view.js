@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var _ = require('underscore'),
   $ = require('jquery'),
+  moment = require('moment'),
   React = require('react'),
   RB = require('react-bootstrap'),
   Jumbotron = RB.Jumbotron,
@@ -204,7 +205,7 @@ var AppView = React.createClass({
           <td>{item.description}</td>
           <td>{item.watchers_count}</td>
           <td>{item.reactjsx && item.reactjsx.userName}</td>
-          <td>{item.updated_at}</td>
+          <td>{moment(item.updated_at).lang('en').fromNow()}</td>
         </tr>
       );
     });
