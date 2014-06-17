@@ -198,9 +198,11 @@ var AppView = React.createClass({
 
   containsQuery: function (item, query){
     query = query || '';  //guard gainst undefined
+    var nameLower = item.name.toLowerCase();
     var descLower = item.description.toLowerCase();
     var queryLower = query.toLowerCase();
-    return (descLower.indexOf(queryLower) > -1);
+    return (nameLower.indexOf(queryLower) > -1 ||
+            descLower.indexOf(queryLower) > -1);
   },
 
   render: function() {

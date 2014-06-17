@@ -22,5 +22,19 @@
       "browserify-shim"
     ]
   },
-  "browserify-shim": "./browserify_shim.js"
+  "browserify-shim": {
+    "jquery": {
+      "exports": "global:$"
+    },
+    "underscore": {
+      "exports": "global:_"
+    },
+    "backbone" : {
+      "exports": "global:Backbone",
+      "depends": [
+        "underscore:_",
+        "jquery:$"
+      ]
+    }
+  }
 }
