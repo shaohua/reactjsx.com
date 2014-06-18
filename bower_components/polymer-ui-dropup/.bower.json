@@ -1,0 +1,28 @@
+{
+  "name": "polymer-ui-dropup",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-animation": "Polymer/polymer-animation#^0.3.0",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#^0.3.0",
+    "polymer-overlay": "Polymer/polymer-overlay#^0.3.0",
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#^0.3.0",
+    "polymer-ui-menu": "Polymer/polymer-ui-menu#^0.3.0"
+  },
+  "devDependencies": {
+    "polymer-ui-base": "Polymer/polymer-ui-base#master",
+    "polymer-ui-menu-item": "Polymer/polymer-ui-menu-item#master",
+    "polymer-ui-toolbar": "Polymer/polymer-ui-toolbar#master"
+  },
+  "homepage": "https://github.com/Polymer/polymer-ui-dropup",
+  "version": "0.3.0",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "a22c6f2ef3fd82832517d56664b61af44e97f317"
+  },
+  "_source": "git://github.com/Polymer/polymer-ui-dropup.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Polymer/polymer-ui-dropup"
+}

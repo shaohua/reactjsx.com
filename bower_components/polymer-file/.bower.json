@@ -1,0 +1,18 @@
+{
+  "name": "polymer-file",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0"
+  },
+  "homepage": "https://github.com/Polymer/polymer-file",
+  "version": "0.3.0",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "e4936983a0f691010ec31c438f9324ccfb6b2f83"
+  },
+  "_source": "git://github.com/Polymer/polymer-file.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Polymer/polymer-file"
+}

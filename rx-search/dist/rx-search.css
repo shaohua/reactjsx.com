@@ -1,0 +1,32 @@
+rx-search {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 1em;
+}
+rx-search .jumbotron {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+rx-search .jumbotron h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+rx-search .oneline-input-container {
+  overflow: hidden;
+  padding-right: 0.1em;
+}
+rx-search .oneline-input-container .oneline-input {
+  width: 100%;
+  height: 34px;
+}
+rx-search .oneline-button {
+  float: right;
+}
+rx-search .center {
+  text-align: center;
+}
+rx-search .search-input {
+  width: 100%;
+  height: 40px;
+}

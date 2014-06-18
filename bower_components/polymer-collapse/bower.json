@@ -1,0 +1,7 @@
+{
+  "name": "polymer-collapse",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0"
+  }
+}

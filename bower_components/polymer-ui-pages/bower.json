@@ -1,0 +1,8 @@
+{
+  "name": "polymer-ui-pages",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-selector": "Polymer/polymer-selector#^0.3.0"
+  }
+}

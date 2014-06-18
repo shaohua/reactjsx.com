@@ -1,0 +1,12 @@
+{
+  "name": "polymer-ui-sidebar-menu",
+  "private": true,
+  "dependencies": {
+    "polymer-ui-submenu-item": "Polymer/polymer-ui-submenu-item#^0.3.0",
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-ui-sidebar-header": "Polymer/polymer-ui-sidebar-header#^0.3.0",
+    "polymer-ui-menu": "Polymer/polymer-ui-menu#^0.3.0",
+    "polymer-ui-nav-arrow": "Polymer/polymer-ui-nav-arrow#^0.3.0",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#^0.3.0"
+  }
+}

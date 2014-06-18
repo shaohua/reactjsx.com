@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<!--
+Copyright 2014 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html>
+  <head>
+    <title>google-jsapi demo</title>
+    <meta charset="utf-8" />
+    <script src="../platform/platform.js"></script>
+    <link rel="import" href="polymer-google-jsapi.html">
+  </head>
+  <body>
+    <polymer-google-jsapi id="jsapi"></polymer-google-jsapi>
+
+    <h3>Latest html5rocks.com articles</h3>
+    <ul>
+      <template id="t" repeat="{{entries}}">
+        <li>{{title}}</li>
+      </template>
+    </ul>
+
+    <script>
+      function feedsLoaded() {
+        var feed = new google.feeds.Feed('http://feeds.feedburner.com/html5rocks');
+        feed.load(function(result) {
+          document.querySelector('#t').model = {
+            entries: result.feed.entries
+          }
+        });
+      }
+
+      var jsapi = document.querySelector('#jsapi');
+      jsapi.addEventListener('polymer-google-jsapi-loaded', function(e) {
+        google.load('feeds', '1', {callback: feedsLoaded});
+      });
+    </script>
+  </body>
+</html>

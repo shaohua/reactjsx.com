@@ -1,0 +1,27 @@
+{
+  "name": "polymer-ui-dropdown",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-animation": "Polymer/polymer-animation#^0.3.0",
+    "polymer-overlay": "Polymer/polymer-overlay#^0.3.0",
+    "polymer-ui-menu": "Polymer/polymer-ui-menu#^0.3.0"
+  },
+  "devDependencies": {
+    "polymer-ui-base": "Polymer/polymer-ui-base#master",
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#master",
+    "polymer-ui-menu-item": "Polymer/polymer-ui-menu-item#master",
+    "polymer-ui-toolbar": "Polymer/polymer-ui-toolbar#master"
+  },
+  "homepage": "https://github.com/Polymer/polymer-ui-dropdown",
+  "version": "0.3.0",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "60141907de359ffec88cb675cc47c6978e20de66"
+  },
+  "_source": "git://github.com/Polymer/polymer-ui-dropdown.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Polymer/polymer-ui-dropdown"
+}

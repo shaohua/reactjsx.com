@@ -1,0 +1,23 @@
+<!--
+Copyright 2014 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../google-apis/google-apis.html">
+
+
+<!--
+This element is deprecated. Please use google-jsapi instead.
+See https://github.com/PolymerLabs/google-apis.
+
+@status deprecated
+@element polymer-google-jsapi
+-->
+<polymer-element name="polymer-google-jsapi" extends="google-jsapi">
+<script>
+  Polymer({
+    notifyEvent: 'polymer-google-jsapi-loaded',
+  });
+</script>
+</polymer-element>

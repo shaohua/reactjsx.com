@@ -1,0 +1,18 @@
+{
+  "name": "polymer-view-source-link",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0"
+  },
+  "homepage": "https://github.com/Polymer/polymer-view-source-link",
+  "version": "0.3.0",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "974eeb7ac17992a3a551c9a997e192af61edcea3"
+  },
+  "_source": "git://github.com/Polymer/polymer-view-source-link.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Polymer/polymer-view-source-link"
+}

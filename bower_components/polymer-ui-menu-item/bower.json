@@ -1,0 +1,9 @@
+{
+  "name": "polymer-ui-menu-item",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-ui-icon": "Polymer/polymer-ui-icon#^0.3.0",
+    "polymer-ui-theme-aware": "Polymer/polymer-ui-theme-aware#^0.3.0"
+  }
+}

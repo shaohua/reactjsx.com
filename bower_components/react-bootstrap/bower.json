@@ -1,0 +1,9 @@
+{
+  "name": "react-bootstrap",
+  "version": "0.10.2",
+  "main": [
+    "react-bootstrap.min.js",
+    "index.js"
+  ],
+  "ignore": []
+}

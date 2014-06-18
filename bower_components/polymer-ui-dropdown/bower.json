@@ -1,0 +1,16 @@
+{
+  "name": "polymer-ui-dropdown",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-animation": "Polymer/polymer-animation#^0.3.0",
+    "polymer-overlay": "Polymer/polymer-overlay#^0.3.0",
+    "polymer-ui-menu": "Polymer/polymer-ui-menu#^0.3.0"
+  },
+  "devDependencies": {
+    "polymer-ui-base": "Polymer/polymer-ui-base#master",
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#master",
+    "polymer-ui-menu-item": "Polymer/polymer-ui-menu-item#master",
+    "polymer-ui-toolbar": "Polymer/polymer-ui-toolbar#master"
+  }
+}

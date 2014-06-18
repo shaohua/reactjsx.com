@@ -1,0 +1,9 @@
+{
+  "name": "polymer-ui-accordion",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-selector": "Polymer/polymer-selector#^0.3.0",
+    "polymer-ui-collapsible": "Polymer/polymer-ui-collapsible#^0.3.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "polymer-ui-overlay",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.3.0",
+    "polymer-overlay": "Polymer/polymer-overlay#^0.3.0"
+  },
+  "homepage": "https://github.com/Polymer/polymer-ui-overlay",
+  "version": "0.3.0",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "c5026f87a79a0eb34fc535f80b7f60a39d78dbd1"
+  },
+  "_source": "git://github.com/Polymer/polymer-ui-overlay.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Polymer/polymer-ui-overlay"
+}
