@@ -3,15 +3,24 @@
   <head>
     <!-- normalize css -->
     <link rel="stylesheet" type="text/css" href="bower_components/normalize.css/normalize.css">
-    <!-- our css -->
-    <link rel="stylesheet" type="text/css" href="dist/reactjsx.css">
-    <!-- 1. Load platform.js for polyfill support. -->
-    <script src="bower_components/platform/platform.js"></script>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
 
-    <!-- 2. Use an HTML Import to bring in the element. -->
-    <link rel="import" href="components/rx-index/rx-index.html">
+    <!-- Load platform.js for polyfill support. -->
+    <script src="bower_components/platform/platform.js"></script>
+    <!-- $ and _ -->
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/react/react-with-addons.min.js"></script>
+    <script src="bower_components/react-bootstrap/react-bootstrap.js"></script>
+
+    <script src="//cdn.firebase.com/js/client/1.0.15/firebase.js"></script>
+    <script src='//cdn.firebase.com/js/simple-login/1.5.0/firebase-simple-login.js'></script>
+
+    <!-- Use an HTML Import to bring in the element. -->
+    <link rel="import" href="rx-search/rx-search.html">
   </head>
   <body>
-    <rx-index></rx-index>
+    <rx-search></rx-search>
   </body>
 </html>
