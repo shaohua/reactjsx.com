@@ -1,7 +1,13 @@
 {
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt-contrib-connect": "^0.7.1"
+    "envify": "^1.2.1",
+    "firebase": "^1.0.17",
+    "grunt-contrib-connect": "^0.7.1",
+    "jquery": "^2.1.1",
+    "node-jsx": "^0.10.0",
+    "react": "^0.10.0",
+    "react-bootstrap": "^0.10.2",
+    "underscore": "^1.6.0"
   }
 }
