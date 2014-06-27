@@ -22,3 +22,10 @@ grunt # this build the actual component
 - I render the React component in the attachedCallback of the web component.
 - Browserify since CommonJS is straightforward.
 - Browserify shim for jQuery, underscore and React so that if we add more components to the page in the future, we don't have to load those libs again.
+
+## Server side rendering
+- Working in progress
+- A extremely naive solution is:
+```
+node server_side_render.js > server_side_render.html
+```
