@@ -15,15 +15,31 @@ var _ = require('underscore'),
   Col = RB.Col,
   Table = RB.Table;
 
+// for server side rendering only
+// enable this for server side rendering
+// this somehow affects browserify
+// if(typeof window === 'undefined'){
+//   var Firebase = require('firebase');
+//   var FirebaseSimpleLogin = function(){};
+// }
+
 var AppView = React.createClass({
   getInitialState: function() {
     this.firebaseRef = new Firebase("//reactjsx.firebaseio.com");
     this.peopleRef = this.firebaseRef.child("people");
     this.compRef = this.firebaseRef.child("components");
-    return {
-      items: [],
-      user: null
-    };
+
+    if(typeof window!== 'undefined'){ //browser
+      return {
+        items: [],
+        user: null
+      };
+    } else {  //server
+      return {
+        items: this.props.items,
+        user: null
+      }
+    }
   },
 
   componentWillMount: function() {
@@ -53,9 +69,11 @@ var AppView = React.createClass({
         .flatten()
         .value();
 
-      this.setState({
-        items: allItems
-      });
+      if (typeof window !== 'undefined') { //browser only
+        this.setState({
+          items: allItems
+        });
+      }
     }.bind(this));
   },
 
